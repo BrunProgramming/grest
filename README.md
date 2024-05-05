@@ -61,11 +61,11 @@ json := map[string]interface{}{
 }
 
 // For this example we need to define a header for the correct functioning of jsonplaceholder but this can change depending on what the specific parameters establish
-client.SetHeaders(map[string]string{
+c.SetHeaders(map[string]string{
     "Content-type": "application/json; charset=UTF-8",
 })
 
-resp, err := client.Post("https://jsonplaceholder.typicode.com/posts", json)
+resp, err := c.Post("https://jsonplaceholder.typicode.com/posts", c.Json(json))
 
 if err != nil {
     fmt.Println(err.Error())

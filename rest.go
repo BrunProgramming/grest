@@ -9,8 +9,11 @@ import (
 	"time"
 )
 
+type Headers map[string]string
+type Json map[string]interface{}
+
 type HttpClient struct {
-	headers map[string]string
+	headers Headers
 }
 
 /*
@@ -20,7 +23,15 @@ func New() HttpClient {
 	return HttpClient{}
 }
 
-func (h *HttpClient) SetHeaders(headers map[string]string) error {
+func (h HttpClient) Json(data Json) ([]byte, error) {
+	json, err := json.Marshal(data)
+	if err != nil {
+		return []byte(""), err
+	}
+	return json, nil
+}
+
+func (h *HttpClient) SetHeaders(headers Headers) error {
 	h.headers = headers
 	return errors.New("Set the headers is not possible")
 }
@@ -60,11 +71,10 @@ func (h HttpClient) Get(url string) (string, error) {
 	return string(body), nil
 }
 
-func (h HttpClient) Post(url string, data map[string]interface{}) (string, error) {
-	dataJson, _ := json.Marshal(data)
+func (h HttpClient) Post(url string, data []byte) (string, error) {
 	c := http.Client{Timeout: time.Duration(0) * time.Second}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(dataJson))
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
 	if err != nil {
 		return "", err
 	}
