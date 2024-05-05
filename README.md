@@ -49,19 +49,19 @@ go run .
 }
 ```
 
-Now to POST request
+Now the example for the POST request
 
 ```go
 c := grest.New()
 
-json := map[string]interface{}{
+json := grest.Json{
 	"title":  "foo",
 	"body":   "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
 	"userId": 1,
 }
 
 // For this example we need to define a header for the correct functioning of jsonplaceholder but this can change depending on what the specific parameters establish
-c.SetHeaders(map[string]string{
+c.SetHeaders(grest.Headers{
     "Content-type": "application/json; charset=UTF-8",
 })
 
