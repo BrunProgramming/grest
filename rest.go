@@ -1,4 +1,4 @@
-package main
+package grest
 
 import (
 	"bytes"
