@@ -23,12 +23,12 @@ func New() HttpClient {
 	return HttpClient{}
 }
 
-func (h HttpClient) Json(data Json) ([]byte, error) {
+func (h HttpClient) Json(data Json) ([]byte) {
 	json, err := json.Marshal(data)
 	if err != nil {
-		return []byte(""), err
+		return []byte(err.Error())
 	}
-	return json, nil
+	return json
 }
 
 func (h *HttpClient) SetHeaders(headers Headers) error {
